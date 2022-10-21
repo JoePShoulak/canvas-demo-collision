@@ -1,7 +1,7 @@
 import { resizeCanvas } from "./lib/helper.js";
 import Particle from "./lib/Particle.js";
 
-const particleCount = 4;
+const particleCount = 100;
 const padding = 5;
 
 /** @type {HTMLCanvasElement} */
@@ -53,7 +53,8 @@ window.addEventListener("resize", () => {
 
   resizeCanvas(canvas);
 
-  setup(); // FIXME
+  // TODO: Instead of resetting the canvas, repopulate offscreen balls
+  setup();
 });
 
 resizeCanvas(canvas);
