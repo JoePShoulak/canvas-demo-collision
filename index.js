@@ -1,7 +1,6 @@
-import { randPosition, distance, resizeCanvas } from "./lib/helper.js";
+import { resizeCanvas } from "./lib/helper.js";
 import Particle from "./lib/Particle.js";
 
-const COLORS = ["#3288F0", "#34FA99", "#B1E33B", "#FABF34", "#F04C22"];
 const particleCount = 4;
 const padding = 5;
 
@@ -9,21 +8,24 @@ const padding = 5;
 const canvas = document.getElementById("my-canvas");
 const c = canvas.getContext("2d");
 
-let particles;
+const particles = [];
+
+const game = {
+  context: c,
+  particles: particles,
+};
 
 const setup = () => {
-  particles = [];
+  particles.length = 0;
 
   for (let i = 0; i < particleCount; i++) {
     let newParticle;
 
-    const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-
     do {
-      newParticle = new Particle(c, ...randPosition(), Particle.radius, color);
+      newParticle = Particle.newRandom(game);
     } while (
       // Check if this particle is closer than padding to another particle
-      particles.some((p) => distance(p, newParticle) < p.radius * 2 + padding)
+      particles.some((p) => newParticle.distance(p) < p.diameter + padding)
     );
 
     particles.push(newParticle);
